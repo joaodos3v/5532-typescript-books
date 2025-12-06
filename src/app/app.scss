@@ -1,0 +1,62 @@
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #f8f9fa;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.books-section {
+  padding: 2rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.books-content {
+  width: 100%;
+  max-width: 1248px; /* 384px * 3 + 48px gap (2rem * 2) */
+
+  @media (max-width: 1300px) {
+    max-width: 800px; /* 384px * 2 + 32px gap */
+  }
+
+  @media (max-width: 850px) {
+    max-width: 384px; /* 1 card */
+  }
+
+  @media (max-width: 480px) {
+    max-width: 100%;
+  }
+}
+
+.results-count {
+  color: #999;
+  font-size: 0.875rem;
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.books-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 384px);
+  gap: 2rem;
+  justify-content: center;
+
+  @media (max-width: 1300px) {
+    grid-template-columns: repeat(2, 384px);
+  }
+
+  @media (max-width: 850px) {
+    grid-template-columns: 1fr;
+  }
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+  }
+}

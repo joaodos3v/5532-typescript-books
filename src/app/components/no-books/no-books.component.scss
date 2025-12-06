@@ -1,0 +1,51 @@
+.no-books {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem 2rem;
+  min-height: 400px;
+}
+
+.no-books-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+  max-width: 800px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+}
+
+.no-books-text {
+  flex: 1;
+  text-align: left;
+}
+
+.no-books-title {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #002F52;
+  line-height: 1.3;
+
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+  }
+}
+
+.no-books-image {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.estante-illustration {
+  width: 100%;
+  max-width: 380px;
+  height: auto;
+}
+
+
+

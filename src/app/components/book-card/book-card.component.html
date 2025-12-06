@@ -1,0 +1,25 @@
+<div class="book-card">
+  <div class="book-cover">
+    @if (book().coverUrl) {
+    <img [src]="book().coverUrl" [alt]="book().title" class="book-image" />
+    } @else {
+    <img src="assets/livro-nao-disponivel.png" [alt]="book().title" class="book-image" />
+    }
+  </div>
+
+  <div class="book-info">
+    <h3 class="book-title">{{ book().title }}</h3>
+    <p class="book-detail">
+      <span class="detail-label">Autor(a):</span>
+      <span class="detail-value">{{ book().author }}</span>
+    </p>
+    <p class="book-detail">
+      <span class="detail-label">Data de publicação:</span>
+      <span class="detail-value">{{ book().publishDate }}</span>
+    </p>
+    <p class="book-detail">
+      <span class="detail-label">Editora:</span>
+      <span class="detail-value">{{ book().publisher }}</span>
+    </p>
+  </div>
+</div>
