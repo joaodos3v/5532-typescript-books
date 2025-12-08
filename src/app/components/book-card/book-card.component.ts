@@ -23,7 +23,8 @@ export class BookCardComponent {
       title: 'Neuromancer',
       author: 'William Gibson',
       publishDate: '1984',
-      publisher: 'Ace Books'
+      publisher: 'Ace Books',
+      status: 'emprestado'
       // coverUrl é opcional, então não precisamos colocar
     };
 
