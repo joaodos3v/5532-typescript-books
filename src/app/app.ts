@@ -1,10 +1,11 @@
 import { Component, computed, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { Book, BookCardComponent } from './components/book-card/book-card.component';
+import { BookCardComponent } from './components/book-card/book-card.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { NoBooksComponent } from './components/no-books/no-books.component';
 import { SearchBoxComponent } from './components/search-box/search-box.component';
+import { Book } from './interfaces/book.interface';
 
 @Component({
   selector: 'app-root',
