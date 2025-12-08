@@ -33,7 +33,7 @@ export class App {
       title: 'TypeScript Avançado',
       author: 'Maria Santos',
       publishDate: '15/06/2021',
-      publisher: 'Companhia das Letras',
+      publisher: 'Companhia das Letras'
     },
     {
       title: 'JavaScript Moderno',
