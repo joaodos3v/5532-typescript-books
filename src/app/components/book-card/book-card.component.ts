@@ -1,5 +1,8 @@
 import { Component, input } from '@angular/core';
 
+// "O Union Type é o 'OU' lógico.
+type StatusLivro = 'disponível' | 'emprestado' | 'em manutenção'; 
+
 export interface Book {
   title: string;
   author: string;
@@ -7,6 +10,11 @@ export interface Book {
   publisher: string;
   coverUrl?: string;
   available?: boolean;
+  status?: StatusLivro;
+}
+
+interface DigitalBook {
+  url: string;
 }
 
 @Component({
@@ -16,4 +24,13 @@ export interface Book {
 })
 export class BookCardComponent {
   book = input.required<Book>();
+
+  // Exemplo de Intersection Types ('E' lógico)
+  livroCompleto: Book & DigitalBook = {
+    title: "",
+    author: "",
+    publishDate: "",
+    publisher: "",
+    url: ""
+  }
 }
