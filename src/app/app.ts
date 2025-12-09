@@ -5,7 +5,16 @@ import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { NoBooksComponent } from './components/no-books/no-books.component';
 import { SearchBoxComponent } from './components/search-box/search-box.component';
-import { Book } from './interfaces/book.interface';
+import { Book, BookWithID } from './interfaces/book.interface';
+
+// Tipos para ordenação
+export type SortField = 'title' | 'author';
+export type SortOrder = 'asc' | 'desc';
+
+enum Ordenacao {
+  ASC = 'Crescente',
+  DESC = 'Descrescente',
+}
 
 @Component({
   selector: 'app-root',
@@ -21,7 +30,7 @@ import { Book } from './interfaces/book.interface';
   styleUrl: './app.scss',
 })
 export class App {
-  private allBooks: Book[] = [
+  private allBooks: BookWithID[] = [
     {
       title: 'Angular para Iniciantes',
       author: 'João Silva',
@@ -83,21 +92,39 @@ export class App {
   ];
 
   searchTerm = signal('');
+  sortField = signal<SortField>('title');
+  sortOrder = signal<SortOrder>('asc');
+
+  // Função genérica de ordenação que pode ser reutilizada para qualquer tipo
+  private sortArray<T>(array: T[], field: keyof T, order: SortOrder): T[] {
+    return [...array].sort((a, b) => {
+      const valueA = String(a[field]).toLowerCase();
+      const valueB = String(b[field]).toLowerCase();
+
+      if (order === 'asc') {
+        return valueA.localeCompare(valueB);
+      } else {
+        return valueB.localeCompare(valueA);
+      }
+    });
+  }
 
   filteredBooks = computed(() => {
     const term = this.searchTerm().toLowerCase().trim();
+    let books = this.allBooks;
 
-    if (!term) {
-      return this.allBooks;
+    if (term) {
+      books = this.allBooks.filter(
+        (book) =>
+          book.title.toLowerCase().includes(term) ||
+          book.author.toLowerCase().includes(term) ||
+          book.publishDate.includes(term) ||
+          book.publisher.toLowerCase().includes(term)
+      );
     }
 
-    return this.allBooks.filter(
-      (book) =>
-        book.title.toLowerCase().includes(term) ||
-        book.author.toLowerCase().includes(term) ||
-        book.publishDate.includes(term) ||
-        book.publisher.toLowerCase().includes(term)
-    );
+    // Aplica a ordenação usando a função genérica
+    return this.sortArray<Book>(books, this.sortField(), this.sortOrder());
   });
 
   hasSearched = computed(() => this.searchTerm().trim().length > 0);
@@ -105,5 +132,10 @@ export class App {
 
   onSearch(term: string) {
     this.searchTerm.set(term);
+  }
+
+  onSortChange(field: SortField, order: SortOrder) {
+    this.sortField.set(field);
+    this.sortOrder.set(order);
   }
 }

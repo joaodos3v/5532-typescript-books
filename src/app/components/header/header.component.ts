@@ -1,11 +1,25 @@
-import { Component } from '@angular/core';
+import { Component, output } from '@angular/core';
+import { SortField, SortOrder } from '../../app';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
-export class HeaderComponent {}
+export class HeaderComponent {
+  sortChange = output<{ field: SortField; order: SortOrder }>();
+  
+  showSortMenu = false;
+
+  toggleSortMenu() {
+    this.showSortMenu = !this.showSortMenu;
+  }
+
+  selectSort(field: SortField, order: SortOrder) {
+    this.sortChange.emit({ field, order });
+    this.showSortMenu = false;
+  }
+}
 
 
 

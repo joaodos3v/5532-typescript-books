@@ -15,8 +15,9 @@ export interface Book {
 }
 
 // Apenas um exemplo do curso (não é utilizado no nosso app)
-interface BookWithID extends Book {
-  id: number;
+export interface BookWithID extends Book {
+  id?: number;
+  outraCoisa?: string;
 }
 
 export interface DigitalBook extends Book {

@@ -4,6 +4,28 @@
       <img src="assets/buscante-logo.png" alt="Buscante Logo" />
     </div>
     <nav class="nav">
+      <div class="sort-container">
+        <button class="sort-button" (click)="toggleSortMenu()">
+          <span>Ordenar</span>
+          <span class="sort-icon">▼</span>
+        </button>
+        @if (showSortMenu) {
+          <div class="sort-menu">
+            <div class="sort-option" (click)="selectSort('title', 'asc')">
+              Título (A-Z)
+            </div>
+            <div class="sort-option" (click)="selectSort('title', 'desc')">
+              Título (Z-A)
+            </div>
+            <div class="sort-option" (click)="selectSort('author', 'asc')">
+              Autor (A-Z)
+            </div>
+            <div class="sort-option" (click)="selectSort('author', 'desc')">
+              Autor (Z-A)
+            </div>
+          </div>
+        }
+      </div>
       <a href="#" class="nav-link">Sobre</a>
       <a href="#" class="nav-link">Contato</a>
     </nav>

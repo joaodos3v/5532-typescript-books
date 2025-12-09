@@ -1,5 +1,5 @@
 <div class="app-container">
-  <app-header></app-header>
+  <app-header (sortChange)="onSortChange($event.field, $event.order)"></app-header>
 
   <main class="main-content">
     <app-search-box (searchChange)="onSearch($event)"></app-search-box>
