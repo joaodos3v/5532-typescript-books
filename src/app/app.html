@@ -2,6 +2,10 @@
   <app-header (sortChange)="onSortChange($event.field, $event.order)"></app-header>
 
   <main class="main-content">
+    @if (highlightedBook()) {
+      <app-highlighted-book [book]="highlightedBook()!" (close)="onCloseHighlight()"></app-highlighted-book>
+    }
+    
     <app-search-box (searchChange)="onSearch($event)"></app-search-box>
 
     @if (showNoBooks()) {
@@ -18,7 +22,7 @@
 
           <div class="books-grid">
             @for (book of filteredBooks(); track book.title + book.author) {
-             <app-book-card [book]="book"></app-book-card>
+             <app-book-card [book]="book" (highlight)="onHighlightBook($event)"></app-book-card>
             }
           </div>
         </div>

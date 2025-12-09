@@ -3,6 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { BookCardComponent } from './components/book-card/book-card.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
+import { HighlightedBookComponent } from './components/highlighted-book/highlighted-book.component';
 import { NoBooksComponent } from './components/no-books/no-books.component';
 import { SearchBoxComponent } from './components/search-box/search-box.component';
 import { Book, BookWithID } from './interfaces/book.interface';
@@ -11,10 +12,7 @@ import { Book, BookWithID } from './interfaces/book.interface';
 export type SortField = 'title' | 'author';
 export type SortOrder = 'asc' | 'desc';
 
-enum Ordenacao {
-  ASC = 'Crescente',
-  DESC = 'Descrescente',
-}
+export type HighlightedBook = Readonly<Pick<Book, 'title' | 'author' | 'coverUrl'>>
 
 @Component({
   selector: 'app-root',
@@ -25,6 +23,7 @@ enum Ordenacao {
     SearchBoxComponent,
     BookCardComponent,
     NoBooksComponent,
+    HighlightedBookComponent,
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss',
@@ -94,6 +93,12 @@ export class App {
   searchTerm = signal('');
   sortField = signal<SortField>('title');
   sortOrder = signal<SortOrder>('asc');
+  highlightedBook = signal<HighlightedBook | null>(null);
+
+  /**
+   * Book - interface com 7 propriedades
+   * --> Quero apenas 3: title, author, coverUrl
+   */
 
   // Função genérica de ordenação que pode ser reutilizada para qualquer tipo
   private sortArray<T>(array: T[], field: keyof T, order: SortOrder): T[] {
@@ -137,5 +142,19 @@ export class App {
   onSortChange(field: SortField, order: SortOrder) {
     this.sortField.set(field);
     this.sortOrder.set(order);
+  }
+
+  onHighlightBook(book: Book) {
+    // Usando Pick e Readonly como Utility Types
+    const highlightedData: HighlightedBook = {
+      title: book.title,
+      author: book.author,
+      coverUrl: book.coverUrl,
+    };
+    this.highlightedBook.set(highlightedData);
+  }
+
+  onCloseHighlight() {
+    this.highlightedBook.set(null);
   }
 }

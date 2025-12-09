@@ -1,0 +1,19 @@
+<div class="highlighted-panel">
+  <div class="highlighted-content">
+    <button class="close-button" (click)="onClose()">×</button>
+    <h2 class="panel-title">Livro em Destaque</h2>
+    <div class="highlighted-book">
+      <div class="highlighted-cover">
+        @if (book().coverUrl) {
+          <img [src]="book().coverUrl" [alt]="book().title" />
+        } @else {
+          <img src="assets/livro-nao-disponivel.png" [alt]="book().title" />
+        }
+      </div>
+      <div class="highlighted-info">
+        <h3>{{ book().title }}</h3>
+        <p class="highlighted-author">{{ book().author }}</p>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { Book, DigitalBook } from '../../interfaces/book.interface';
 
 @Component({
@@ -8,6 +8,11 @@ import { Book, DigitalBook } from '../../interfaces/book.interface';
 })
 export class BookCardComponent {
   book = input.required<Book>();
+  highlight = output<Book>();
+
+  onHighlight() {
+    this.highlight.emit(this.book());
+  }
 
   // Exemplo de Intersection Types ('E' lógico)
   livroCompleto: DigitalBook = {

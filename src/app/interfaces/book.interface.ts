@@ -23,3 +23,11 @@ export interface BookWithID extends Book {
 export interface DigitalBook extends Book {
   url: string;
 }
+
+// Exemplo de Partial (Utility Type) + Uso
+type BookUpdate = Partial<Book>;
+const dadosParaAtualizar: BookUpdate = { coverUrl: 'nova-capa.jpg' };
+
+// Exemplo de Partial (Utility Type) + Uso
+type BookCreation = Required<Book>;
+// const dadosParaCriacao: BookCreation = { coverUrl: 'nova-capa.jpg' }; // Vai dar erro

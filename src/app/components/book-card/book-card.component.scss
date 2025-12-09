@@ -35,6 +35,7 @@
   flex-direction: column;
   gap: 0.5rem;
   flex: 1;
+  position: relative;
 }
 
 .book-title {
@@ -60,6 +61,23 @@
 .detail-value {
   color: #8B8B8B;
   font-weight: 400;
+}
+
+.highlight-button {
+  margin-top: auto;
+  background-color: #6C63FF;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #5a52d5;
+  }
 }
 
 
