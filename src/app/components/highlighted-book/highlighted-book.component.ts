@@ -1,5 +1,5 @@
 import { Component, input, output } from '@angular/core';
-import { Book } from '../../interfaces/book.interface';
+import { HighlightedBook } from '../../interfaces/book.interface';
 
 @Component({
   selector: 'app-highlighted-book',
@@ -7,7 +7,7 @@ import { Book } from '../../interfaces/book.interface';
   styleUrl: './highlighted-book.component.scss',
 })
 export class HighlightedBookComponent {
-  book = input.required<Readonly<Pick<Book, 'title' | 'author' | 'coverUrl'>>>();
+  book = input.required<HighlightedBook>();
   close = output<void>();
 
   onClose() {

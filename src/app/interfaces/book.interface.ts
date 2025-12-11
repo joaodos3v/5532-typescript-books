@@ -4,6 +4,8 @@ type Year = number;
 // "O Union Type é o 'OU' lógico.
 type StatusLivro = 'disponível' | 'emprestado' | 'em manutenção'; 
 
+export type HighlightedBook = Readonly<Pick<Book, 'title' | 'author' | 'coverUrl'>>
+
 export interface Book {
   title: string;
   author: string;

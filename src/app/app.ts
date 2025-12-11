@@ -6,13 +6,11 @@ import { HeaderComponent } from './components/header/header.component';
 import { HighlightedBookComponent } from './components/highlighted-book/highlighted-book.component';
 import { NoBooksComponent } from './components/no-books/no-books.component';
 import { SearchBoxComponent } from './components/search-box/search-box.component';
-import { Book, BookWithID } from './interfaces/book.interface';
+import { Book, BookWithID, HighlightedBook } from './interfaces/book.interface';
 
 // Tipos para ordenação
 export type SortField = 'title' | 'author';
 export type SortOrder = 'asc' | 'desc';
-
-export type HighlightedBook = Readonly<Pick<Book, 'title' | 'author' | 'coverUrl'>>
 
 @Component({
   selector: 'app-root',
@@ -154,7 +152,7 @@ export class App {
     this.highlightedBook.set(highlightedData);
   }
 
-  onCloseHighlight() {
+  onCloseHighlight(): void {
     this.highlightedBook.set(null);
   }
 }
