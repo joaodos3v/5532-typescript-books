@@ -1,4 +1,4 @@
-import { Component, computed, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { BookCardComponent } from './components/book-card/book-card.component';
 import { FooterComponent } from './components/footer/footer.component';
@@ -7,10 +7,7 @@ import { HighlightedBookComponent } from './components/highlighted-book/highligh
 import { NoBooksComponent } from './components/no-books/no-books.component';
 import { SearchBoxComponent } from './components/search-box/search-box.component';
 import { Book, BookWithID, HighlightedBook } from './interfaces/book.interface';
-
-// Tipos para ordenação
-export type SortField = 'title' | 'author';
-export type SortOrder = 'asc' | 'desc';
+import { BookSorterService, SortField, SortOrder } from './services/book-sorter.service';
 
 @Component({
   selector: 'app-root',
@@ -27,6 +24,8 @@ export type SortOrder = 'asc' | 'desc';
   styleUrl: './app.scss',
 })
 export class App {
+  private readonly bookSorterService = inject(BookSorterService);
+
   private allBooks: BookWithID[] = [
     {
       title: 'Angular para Iniciantes',
@@ -93,20 +92,6 @@ export class App {
   sortOrder = signal<SortOrder>('asc');
   highlightedBook = signal<HighlightedBook | null>(null);
 
-  // Função genérica de ordenação que pode ser reutilizada para qualquer tipo
-  private sortArray<T>(array: T[], field: keyof T, order: SortOrder): T[] {
-    return [...array].sort((a, b) => {
-      const valueA = String(a[field]).toLowerCase();
-      const valueB = String(b[field]).toLowerCase();
-
-      if (order === 'asc') {
-        return valueA.localeCompare(valueB);
-      } else {
-        return valueB.localeCompare(valueA);
-      }
-    });
-  }
-
   filteredBooks = computed(() => {
     const term = this.searchTerm().toLowerCase().trim();
     let books = this.allBooks;
@@ -122,7 +107,7 @@ export class App {
     }
 
     // Aplica a ordenação usando a função genérica
-    return this.sortArray<Book>(books, this.sortField(), this.sortOrder());
+    return this.bookSorterService.sortArray<Book>(books, this.sortField(), this.sortOrder());
   });
 
   hasSearched = computed(() => this.searchTerm().trim().length > 0);

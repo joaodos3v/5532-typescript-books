@@ -1,5 +1,5 @@
 import { Component, output } from '@angular/core';
-import { SortField, SortOrder } from '../../app';
+import { SortField, SortOrder } from '../../services/book-sorter.service';
 
 @Component({
   selector: 'app-header',
