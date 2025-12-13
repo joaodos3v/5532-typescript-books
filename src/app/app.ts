@@ -7,6 +7,7 @@ import { HighlightedBookComponent } from './components/highlighted-book/highligh
 import { NoBooksComponent } from './components/no-books/no-books.component';
 import { SearchBoxComponent } from './components/search-box/search-box.component';
 import { Book, BookWithID, HighlightedBook } from './interfaces/book.interface';
+import { BookSearchService } from './services/book-search.service';
 import { BookSorterService, SortField, SortOrder } from './services/book-sorter.service';
 
 @Component({
@@ -25,6 +26,7 @@ import { BookSorterService, SortField, SortOrder } from './services/book-sorter.
 })
 export class App {
   private readonly bookSorterService = inject(BookSorterService);
+  private readonly bookSearchService = inject(BookSearchService);
 
   private allBooks: BookWithID[] = [
     {
@@ -93,21 +95,13 @@ export class App {
   highlightedBook = signal<HighlightedBook | null>(null);
 
   filteredBooks = computed(() => {
-    const term = this.searchTerm().toLowerCase().trim();
-    let books = this.allBooks;
+    const term = this.searchTerm();
 
-    if (term) {
-      books = this.allBooks.filter(
-        (book) =>
-          book.title.toLowerCase().includes(term) ||
-          book.author.toLowerCase().includes(term) ||
-          book.publishDate.includes(term) ||
-          book.publisher.toLowerCase().includes(term)
-      );
-    }
+    // Usa o serviço de busca (OCP)
+    const filtered = this.bookSearchService.search(this.allBooks, term);
 
-    // Aplica a ordenação usando a função genérica
-    return this.bookSorterService.sortArray<Book>(books, this.sortField(), this.sortOrder());
+    // Usa o serviço de ordenação (SRP)
+    return this.bookSorterService.sortArray<Book>(filtered, this.sortField(), this.sortOrder());
   });
 
   hasSearched = computed(() => this.searchTerm().trim().length > 0);
