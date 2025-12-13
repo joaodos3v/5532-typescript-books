@@ -9,6 +9,7 @@ import { SearchBoxComponent } from './components/search-box/search-box.component
 import { Book, BookWithID, HighlightedBook } from './interfaces/book.interface';
 import { BookSearchService } from './services/book-search.service';
 import { BookSorterService, SortField, SortOrder } from './services/book-sorter.service';
+import { DefaultBookHighlighter } from './services/highlighter/default-book-highlighter';
 
 @Component({
   selector: 'app-root',
@@ -117,11 +118,13 @@ export class App {
   }
 
   onHighlightBook(book: Book) {
-    const highlightedData: HighlightedBook = {
-      title: book.title,
-      author: book.author,
-      coverUrl: book.coverUrl,
-    };
+    const highlighter = new DefaultBookHighlighter();
+    const highlightedData: HighlightedBook | null = highlighter.highlight(book);
+
+    if (!highlightedData) {
+      return;
+    }
+
     this.highlightedBook.set(highlightedData);
   }
 
