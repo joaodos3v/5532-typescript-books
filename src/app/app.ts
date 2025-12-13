@@ -93,11 +93,6 @@ export class App {
   sortOrder = signal<SortOrder>('asc');
   highlightedBook = signal<HighlightedBook | null>(null);
 
-  /**
-   * Book - interface com 7 propriedades
-   * --> Quero apenas 3: title, author, coverUrl
-   */
-
   // Função genérica de ordenação que pode ser reutilizada para qualquer tipo
   private sortArray<T>(array: T[], field: keyof T, order: SortOrder): T[] {
     return [...array].sort((a, b) => {
@@ -143,7 +138,6 @@ export class App {
   }
 
   onHighlightBook(book: Book) {
-    // Usando Pick e Readonly como Utility Types
     const highlightedData: HighlightedBook = {
       title: book.title,
       author: book.author,
