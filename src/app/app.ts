@@ -1,5 +1,6 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { BOOK_HIGHLIGHTER_TOKEN } from '../tokens/book-highlighter.token';
 import { BookCardComponent } from './components/book-card/book-card.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -9,7 +10,6 @@ import { SearchBoxComponent } from './components/search-box/search-box.component
 import { Book, BookWithID, HighlightedBook } from './interfaces/book.interface';
 import { BookSearchService } from './services/book-search.service';
 import { BookSorterService, SortField, SortOrder } from './services/book-sorter.service';
-import { DefaultBookHighlighter } from './services/highlighter/default-book-highlighter';
 
 @Component({
   selector: 'app-root',
@@ -28,6 +28,7 @@ import { DefaultBookHighlighter } from './services/highlighter/default-book-high
 export class App {
   private readonly bookSorterService = inject(BookSorterService);
   private readonly bookSearchService = inject(BookSearchService);
+  private readonly bookHighlighter = inject(BOOK_HIGHLIGHTER_TOKEN);
 
   private allBooks: BookWithID[] = [
     {
@@ -118,8 +119,7 @@ export class App {
   }
 
   onHighlightBook(book: Book) {
-    const highlighter = new DefaultBookHighlighter();
-    const highlightedData: HighlightedBook | null = highlighter.highlight(book);
+    const highlightedData: HighlightedBook | null = this.bookHighlighter.highlight(book);
 
     if (!highlightedData) {
       return;
